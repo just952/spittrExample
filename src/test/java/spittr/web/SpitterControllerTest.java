@@ -32,7 +32,13 @@ public class SpitterControllerTest {
 		SpitterController controller = new SpitterController(mockRepository);
 		MockMvc mockMvc = standaloneSetup(controller).build();
 
-		mockMvc.perform(post("/spitter/register").param("firstName", "Jack").param("lastName", "Bauer").param("username", "jbauer").param("password", "24hours").param("email", "jbauer@ctu.gov")).andExpect(redirectedUrl("/spitter/jbauer"));
+		mockMvc.perform(post("/spitter/register")
+				.param("firstName", "Jack")
+				.param("lastName", "Bauer")
+				.param("username", "jbauer")
+				.param("password", "24hours")
+				.param("email", "jbauer@ctu.gov"))
+		.andExpect(redirectedUrl("/spitter/jbauer"));
 
 		verify(mockRepository, atLeastOnce()).save(unsaved);
 	}
@@ -43,7 +49,12 @@ public class SpitterControllerTest {
 		SpitterController controller = new SpitterController(mockRepository);
 		MockMvc mockMvc = standaloneSetup(controller).build();
 
-		mockMvc.perform(post("/spitter/register")).andExpect(status().isOk()).andExpect(view().name("registerForm")).andExpect(model().errorCount(5)).andExpect(model().attributeHasFieldErrors("spitter", "firstName", "lastName", "username", "password", "email"));
+		mockMvc.perform(post("/spitter/register")
+				.param("firstName", ""))
+		.andExpect(status().isOk())
+		.andExpect(view().name("registerForm"))
+		.andExpect(model().errorCount(5))
+		.andExpect(model().attributeHasFieldErrors("spitter", "firstName", "lastName", "username", "password", "email"));
 	}
 
 }
