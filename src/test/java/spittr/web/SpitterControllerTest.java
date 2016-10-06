@@ -27,7 +27,7 @@ public class SpitterControllerTest {
 		SpitterRepository mockRepository = mock(SpitterRepository.class);
 		Spitter unsaved = new Spitter("jbauer", "24hours", "Jack", "Bauer", "jbauer@ctu.gov");
 		Spitter saved = new Spitter(24L, "jbauer", "24hours", "Jack", "Bauer", "jbauer@ctu.gov");
-		when(mockRepository.save(unsaved)).thenReturn(saved);
+		when(mockRepository.save(unsaved)).thenReturn(saved);		// 여기서는 해도 그만 안해도 그만..
 
 		SpitterController controller = new SpitterController(mockRepository);
 		MockMvc mockMvc = standaloneSetup(controller).build();
@@ -55,6 +55,7 @@ public class SpitterControllerTest {
 		.andExpect(view().name("registerForm"))
 		.andExpect(model().errorCount(5))
 		.andExpect(model().attributeHasFieldErrors("spitter", "firstName", "lastName", "username", "password", "email"));
+		
 	}
 
 }
